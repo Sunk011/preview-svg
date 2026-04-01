@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Download } from 'lucide-react';
 
 const initialSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400" width="100%" height="400">
   <defs>
@@ -56,12 +57,32 @@ const initialSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400
 export default function App() {
   const [svgCode, setSvgCode] = useState(initialSvg);
 
+  const handleDownload = () => {
+    const blob = new Blob([svgCode], { type: 'image/svg+xml' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'diagram.svg';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  };
+
   return (
     <div className="flex h-screen w-full bg-gray-100 font-sans">
       {/* Left Pane: Editor */}
       <div className="w-1/2 h-full flex flex-col border-r border-gray-300 bg-white">
         <div className="p-4 bg-gray-800 text-white font-semibold flex justify-between items-center">
           <span>SVG Code Editor</span>
+          <button
+            onClick={handleDownload}
+            className="flex items-center gap-2 px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-sm rounded-md transition-colors"
+            title="Download SVG file"
+          >
+            <Download size={16} />
+            Download SVG
+          </button>
         </div>
         <textarea
           className="flex-1 w-full p-4 font-mono text-sm bg-gray-900 text-gray-100 outline-none resize-none"
