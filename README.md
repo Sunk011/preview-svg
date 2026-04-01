@@ -1,20 +1,56 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# SVG Live Previewer
 
-# Run and deploy your AI Studio app
+A real-time SVG code editor and previewer built with React, Vite, and Tailwind CSS.
 
-This contains everything you need to run your app locally.
+## Features
 
-View your app in AI Studio: https://ai.studio/apps/0ca97068-1cfb-4a8b-a5f3-8e107a7015ee
+- **Real-Time Preview**: Instantly see the rendered SVG as you type or modify the code.
+- **Split-Pane Interface**: Clean, side-by-side layout with a dark-themed code editor on the left and a light-themed preview area on the right.
+- **Download Functionality**: Easily export and save your current SVG code as a `.svg` file with a single click.
+- **Responsive Design**: Adapts to your screen size for optimal viewing and editing.
 
-## Run Locally
+## Tech Stack
 
-**Prerequisites:**  Node.js
+- **Framework**: [React 19](https://react.dev/)
+- **Build Tool**: [Vite](https://vitejs.dev/)
+- **Styling**: [Tailwind CSS v4](https://tailwindcss.com/)
+- **Icons**: [Lucide React](https://lucide.dev/)
 
+## Getting Started
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+Follow these instructions to get a copy of the project up and running on your local machine.
+
+### Prerequisites
+
+- Node.js (v18 or higher recommended)
+- npm or yarn
+
+### Installation
+
+1. Clone the repository:
+   ```bash
+   git clone <repository-url>
+   cd svg-live-previewer
+   ```
+
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+3. Start the development server:
+   ```bash
+   npm run dev
+   ```
+
+4. Open your browser and navigate to `http://localhost:3000` (or the port specified in your terminal).
+
+## Usage
+
+1. Paste or type your SVG code into the left editor pane.
+2. Watch the preview update automatically on the right pane.
+3. Click the **Download SVG** button in the top right corner of the editor to save your work as `diagram.svg`.
+
+## License
+
+This project is open-source and available under the [MIT License](LICENSE).
