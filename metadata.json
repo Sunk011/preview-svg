@@ -1,0 +1,5 @@
+{
+  "name": "SVG Live Previewer",
+  "description": "A real-time SVG code editor and previewer.",
+  "requestFramePermissions": []
+}
