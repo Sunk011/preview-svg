@@ -31,8 +31,8 @@ Make sure you have the following installed on your machine:
 First, clone the project to your local machine using Git:
 
 ```bash
-git clone <repository-url>
-cd svg-live-previewer
+git clone https://github.com/Sunk011/preview-svg.git
+cd preview-svg
 ```
 
 ### 2. Install Dependencies

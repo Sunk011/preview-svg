@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Download } from 'lucide-react';
+import { Download, X } from 'lucide-react';
 
 const initialSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400" width="100%" height="400">
   <defs>
@@ -56,17 +56,28 @@ const initialSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400
 
 export default function App() {
   const [svgCode, setSvgCode] = useState(initialSvg);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [filename, setFilename] = useState('diagram');
 
-  const handleDownload = () => {
+  const handleDownloadClick = () => {
+    setIsModalOpen(true);
+  };
+
+  const confirmDownload = () => {
+    let finalName = filename.trim() || 'diagram';
+    if (!finalName.toLowerCase().endsWith('.svg')) {
+      finalName += '.svg';
+    }
     const blob = new Blob([svgCode], { type: 'image/svg+xml' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = 'diagram.svg';
+    a.download = finalName;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
+    setIsModalOpen(false);
   };
 
   return (
@@ -76,7 +87,7 @@ export default function App() {
         <div className="p-4 bg-gray-800 text-white font-semibold flex justify-between items-center">
           <span>SVG Code Editor</span>
           <button
-            onClick={handleDownload}
+            onClick={handleDownloadClick}
             className="flex items-center gap-2 px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-sm rounded-md transition-colors"
             title="Download SVG file"
           >
@@ -104,6 +115,53 @@ export default function App() {
           />
         </div>
       </div>
+
+      {/* Download Modal */}
+      {isModalOpen && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg shadow-xl w-full max-w-sm overflow-hidden">
+            <div className="flex justify-between items-center p-4 border-b border-gray-200">
+              <h3 className="font-semibold text-gray-800">Save SVG As...</h3>
+              <button onClick={() => setIsModalOpen(false)} className="text-gray-500 hover:text-gray-700">
+                <X size={20} />
+              </button>
+            </div>
+            <div className="p-4">
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Filename
+              </label>
+              <div className="flex items-center">
+                <input
+                  type="text"
+                  value={filename}
+                  onChange={(e) => setFilename(e.target.value)}
+                  className="flex-1 border border-gray-300 rounded-l-md px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
+                  placeholder="diagram"
+                  autoFocus
+                  onKeyDown={(e) => e.key === 'Enter' && confirmDownload()}
+                />
+                <span className="bg-gray-100 border border-l-0 border-gray-300 rounded-r-md px-3 py-2 text-sm text-gray-500">
+                  .svg
+                </span>
+              </div>
+            </div>
+            <div className="p-4 bg-gray-50 flex justify-end gap-2 border-t border-gray-200">
+              <button
+                onClick={() => setIsModalOpen(false)}
+                className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={confirmDownload}
+                className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700"
+              >
+                Download
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
